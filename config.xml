@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+	<name>lk_pricefrom</name>
+	<displayName><![CDATA[Lk Interactive - Price From]]></displayName>
+	<version><![CDATA[1.0.0]]></version>
+	<description><![CDATA[Add a price from label in product page and Category page]]></description>
+	<author><![CDATA[Lk Interactive]]></author>
+	<tab><![CDATA[front_office_features]]></tab>
+	<is_configurable>1</is_configurable>
+	<need_instance>1</need_instance>
+</module>

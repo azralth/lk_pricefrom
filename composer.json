@@ -1,0 +1,18 @@
+{
+  "name": "lk-interactive/lk_pricefrom",
+  "description": "Add new label \"price from\" in product and listing page",
+  "license": "MIT",
+  "type": "Prestashop module",
+  "authors": [
+    {
+      "name": "Lk interactive",
+      "email": "webmaster@lk-interactive.fr"
+    }
+  ],
+  "minimum-stability": "stable",
+  "type": "prestashop-module",
+  "require-dev": {
+    "prestashop/autoindex": "^1.0"
+  },
+  "require": {}
+}
