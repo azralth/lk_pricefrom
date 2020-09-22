@@ -89,8 +89,6 @@ class Lk_Pricefrom extends Module
             $this->postProcess();
         }
 
-        $this->context->smarty->assign('module_dir', $this->_path);
-
         return $this->renderForm();
     }
 
@@ -208,7 +206,7 @@ class Lk_Pricefrom extends Module
         $show_in_category = Configuration::get('LK_PRICE_FROM_ON_LISTING_PAGE');
         $type = $params['type'];
         if ($type == 'after_price' || ($type == 'before_price' && $show_in_category)) {
-            $product_id = $type == 'before_price' ? $params['product']->id : (int)Tools::getValue('id_product');
+            $product_id = (int)Tools::getValue('id_product');
             $lang = $this->context->language->id;
             $label = Configuration::get('LK_PRICE_FROM_LABEL', $lang);
             $product = new Product($product_id);
@@ -223,16 +221,18 @@ class Lk_Pricefrom extends Module
                     $attributePrice = Product::getPriceStatic($product_id, true, $attribute['id_product_attribute']);
                     $price[$k] = $attributePrice;
                     if($k > 0) {
+                        $oldprice = !isset($lowestprice) ? $oldprice : $lowestprice;
                         if($price[$k] < $oldprice) {
                             $lowestprice = $price[$k];
                         }
                     }
                 }
-                $this->context->smarty->assign(array(
-                    'label_from_price' => $label,
-                    'lowest_price' => Tools::displayPrice($lowestprice)
-                ));
-
+                if (isset($lowestprice)) {
+                    $this->context->smarty->assign(array(
+                        'label_from_price' => $label,
+                        'lowest_price' => Tools::displayPrice($lowestprice)
+                    ));
+                }
                 return $this->context->smarty->fetch(_PS_MODULE_DIR_.$this->name.'/views/templates/front/hook/display-price.tpl');
             }
         }
