@@ -211,19 +211,16 @@ class Lk_Pricefrom extends Module
             $label = Configuration::get('LK_PRICE_FROM_LABEL', $lang);
             $product = new Product($product_id);
             $attributes = $product->getAttributesResume($lang);
+            $lowestprice = (int)99999999999;
             if (!empty($attributes)) {
-                $price = [];
-
-                foreach ($attributes as $k => $attribute) {
-                    if($k != 0) {
-                        $oldprice = $price[$k - 1];
-                    }
-                    $attributePrice = Product::getPriceStatic($product_id, true, $attribute['id_product_attribute']);
-                    $price[$k] = $attributePrice;
-                    if($k > 0) {
+                foreach ($attributes as $attribute) {
+                    $stock = StockAvailable::getQuantityAvailableByProduct($product_id, $attribute['id_product_attribute'], 1);
+                    if ($stock > 0) {
+                        $oldprice = isset($attributePrice) ? $attributePrice : null;
+                        $attributePrice = Product::getPriceStatic($product_id, true, $attribute['id_product_attribute']);
                         $oldprice = !isset($lowestprice) ? $oldprice : $lowestprice;
-                        if($price[$k] < $oldprice) {
-                            $lowestprice = $price[$k];
+                        if($attributePrice < $lowestprice) {
+                            $lowestprice = $attributePrice;
                         }
                     }
                 }
