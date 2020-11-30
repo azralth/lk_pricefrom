@@ -224,7 +224,7 @@ class Lk_Pricefrom extends Module
                         }
                     }
                 }
-                if (isset($lowestprice)) {
+                if ($lowestprice != 99999999999) {
                     $this->context->smarty->assign(array(
                         'label_from_price' => $label,
                         'lowest_price' => Tools::displayPrice($lowestprice)
